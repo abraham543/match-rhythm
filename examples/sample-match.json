@@ -1,0 +1,1168 @@
+{
+ "id": "sample-match",
+ "title": "Sample match (generated)",
+ "game": "Tactical shooter (5v5, first to 13)",
+ "teams": [
+  {
+   "name": "Sky Hawks",
+   "tag": "SKY",
+   "color": "#4fb3ff"
+  },
+  {
+   "name": "Iron Tide",
+   "tag": "TIDE",
+   "color": "#ff6b6b"
+  }
+ ],
+ "duration": 2713.2129914734983,
+ "events": [
+  {
+   "t": 42.57955472813919,
+   "kind": "elim",
+   "team": 0,
+   "label": "SKY takes a duel (5v4)"
+  },
+  {
+   "t": 43.06709149526432,
+   "kind": "elim",
+   "team": 0,
+   "label": "SKY takes a duel (5v3)"
+  },
+  {
+   "t": 44.12830926449969,
+   "kind": "elim",
+   "team": 0,
+   "label": "SKY takes a duel (5v2)"
+  },
+  {
+   "t": 47.940921620186415,
+   "kind": "objective",
+   "team": 0,
+   "label": "Round 1: SKY plants"
+  },
+  {
+   "t": 59.28289229618385,
+   "kind": "elim",
+   "team": 1,
+   "label": "TIDE takes a duel (4v2)"
+  },
+  {
+   "t": 69.40908892629669,
+   "kind": "elim",
+   "team": 1,
+   "label": "TIDE takes a duel (3v2)"
+  },
+  {
+   "t": 89.43646203610115,
+   "kind": "round",
+   "team": 0,
+   "label": "Round 1 to SKY — 1:0"
+  },
+  {
+   "t": 133.62042371085846,
+   "kind": "elim",
+   "team": 1,
+   "label": "TIDE takes a duel (4v5)"
+  },
+  {
+   "t": 135.52735677114688,
+   "kind": "elim",
+   "team": 0,
+   "label": "SKY takes a duel (4v4)"
+  },
+  {
+   "t": 137.34900433733128,
+   "kind": "elim",
+   "team": 0,
+   "label": "SKY takes a duel (4v3)"
+  },
+  {
+   "t": 141.9884756093379,
+   "kind": "objective",
+   "team": 0,
+   "label": "Round 2: SKY plants"
+  },
+  {
+   "t": 154.2021152685862,
+   "kind": "elim",
+   "team": 1,
+   "label": "TIDE takes a duel (3v3)"
+  },
+  {
+   "t": 166.38159177149646,
+   "kind": "elim",
+   "team": 1,
+   "label": "TIDE takes a duel (2v3)"
+  },
+  {
+   "t": 167.05276707368904,
+   "kind": "elim",
+   "team": 0,
+   "label": "SKY takes a duel (2v2)"
+  },
+  {
+   "t": 167.86425883392803,
+   "kind": "elim",
+   "team": 0,
+   "label": "SKY takes a duel (2v1)"
+  },
+  {
+   "t": 178.54310559011066,
+   "kind": "elim",
+   "team": 0,
+   "label": "SKY takes a duel (2v0)"
+  },
+  {
+   "t": 200.13565226458013,
+   "kind": "round",
+   "team": 0,
+   "label": "Round 2 to SKY — 2:0"
+  },
+  {
+   "t": 244.53353759581222,
+   "kind": "elim",
+   "team": 0,
+   "label": "SKY takes a duel (5v4)"
+  },
+  {
+   "t": 246.28931334363295,
+   "kind": "elim",
+   "team": 0,
+   "label": "SKY takes a duel (5v3)"
+  },
+  {
+   "t": 251.79193438338115,
+   "kind": "objective",
+   "team": 0,
+   "label": "Round 3: SKY plants"
+  },
+  {
+   "t": 263.8067749070935,
+   "kind": "elim",
+   "team": 0,
+   "label": "SKY takes a duel (5v2)"
+  },
+  {
+   "t": 265.538017605152,
+   "kind": "elim",
+   "team": 1,
+   "label": "TIDE takes a duel (4v2)"
+  },
+  {
+   "t": 286.01714253714306,
+   "kind": "swing",
+   "team": 1,
+   "label": "TIDE breaks the streak"
+  },
+  {
+   "t": 286.6171425371431,
+   "kind": "round",
+   "team": 1,
+   "label": "Round 3 to TIDE — 2:1"
+  },
+  {
+   "t": 322.18900321936235,
+   "kind": "elim",
+   "team": 1,
+   "label": "TIDE takes a duel (4v5)"
+  },
+  {
+   "t": 332.0535772017203,
+   "kind": "elim",
+   "team": 1,
+   "label": "TIDE takes a duel (3v5)"
+  },
+  {
+   "t": 332.5833030260168,
+   "kind": "elim",
+   "team": 1,
+   "label": "TIDE takes a duel (2v5)"
+  },
+  {
+   "t": 349.93071393659335,
+   "kind": "elim",
+   "team": 1,
+   "label": "TIDE takes a duel (1v5)"
+  },
+  {
+   "t": 350.8872668153606,
+   "kind": "elim",
+   "team": 1,
+   "label": "TIDE takes a duel (0v5)"
+  },
+  {
+   "t": 354.82731314813714,
+   "kind": "objective",
+   "team": 0,
+   "label": "Round 4: SKY plants"
+  },
+  {
+   "t": 398.7412784679327,
+   "kind": "round",
+   "team": 1,
+   "label": "Round 4 to TIDE — 2:2"
+  },
+  {
+   "t": 444.3070782349911,
+   "kind": "elim",
+   "team": 0,
+   "label": "SKY takes a duel (5v4)"
+  },
+  {
+   "t": 445.8648770762142,
+   "kind": "elim",
+   "team": 1,
+   "label": "TIDE takes a duel (4v4)"
+  },
+  {
+   "t": 446.40775845921604,
+   "kind": "elim",
+   "team": 1,
+   "label": "TIDE takes a duel (3v4)"
+  },
+  {
+   "t": 459.6409802034032,
+   "kind": "elim",
+   "team": 0,
+   "label": "SKY takes a duel (3v3)"
+  },
+  {
+   "t": 473.43409348069696,
+   "kind": "elim",
+   "team": 1,
+   "label": "TIDE takes a duel (2v3)"
+  },
+  {
+   "t": 474.0400260766503,
+   "kind": "elim",
+   "team": 1,
+   "label": "TIDE takes a duel (1v3)"
+  },
+  {
+   "t": 475.16028969301846,
+   "kind": "elim",
+   "team": 0,
+   "label": "SKY takes a duel (1v2)"
+  },
+  {
+   "t": 483.11640348318036,
+   "kind": "elim",
+   "team": 1,
+   "label": "TIDE takes a duel (0v2)"
+  },
+  {
+   "t": 500.61077618072744,
+   "kind": "round",
+   "team": 1,
+   "label": "Round 5 to TIDE — 2:3"
+  },
+  {
+   "t": 546.2849294889254,
+   "kind": "elim",
+   "team": 1,
+   "label": "TIDE takes a duel (4v5)"
+  },
+  {
+   "t": 546.9042817875279,
+   "kind": "elim",
+   "team": 1,
+   "label": "TIDE takes a duel (3v5)"
+  },
+  {
+   "t": 551.7764333830683,
+   "kind": "objective",
+   "team": 0,
+   "label": "Round 6: SKY plants"
+  },
+  {
+   "t": 569.9616315144582,
+   "kind": "elim",
+   "team": 1,
+   "label": "TIDE takes a duel (2v5)"
+  },
+  {
+   "t": 577.5225359253121,
+   "kind": "elim",
+   "team": 1,
+   "label": "TIDE takes a duel (1v5)"
+  },
+  {
+   "t": 579.3252834658606,
+   "kind": "elim",
+   "team": 0,
+   "label": "SKY takes a duel (1v4)"
+  },
+  {
+   "t": 580.3890729031993,
+   "kind": "elim",
+   "team": 1,
+   "label": "TIDE takes a duel (0v4)"
+  },
+  {
+   "t": 619.9024044644088,
+   "kind": "round",
+   "team": 1,
+   "label": "Round 6 to TIDE — 2:4"
+  },
+  {
+   "t": 668.7028818692081,
+   "kind": "elim",
+   "team": 0,
+   "label": "SKY takes a duel (5v4)"
+  },
+  {
+   "t": 669.6291302769446,
+   "kind": "elim",
+   "team": 1,
+   "label": "TIDE takes a duel (4v4)"
+  },
+  {
+   "t": 678.9501446169802,
+   "kind": "elim",
+   "team": 0,
+   "label": "SKY takes a duel (4v3)"
+  },
+  {
+   "t": 680.1976322718897,
+   "kind": "elim",
+   "team": 0,
+   "label": "SKY takes a duel (4v2)"
+  },
+  {
+   "t": 681.8631735538133,
+   "kind": "elim",
+   "team": 0,
+   "label": "SKY takes a duel (4v1)"
+  },
+  {
+   "t": 685.0593005494216,
+   "kind": "objective",
+   "team": 0,
+   "label": "Round 7: SKY plants"
+  },
+  {
+   "t": 695.9759792878293,
+   "kind": "elim",
+   "team": 1,
+   "label": "TIDE takes a duel (3v1)"
+  },
+  {
+   "t": 697.2142391606235,
+   "kind": "elim",
+   "team": 0,
+   "label": "SKY takes a duel (3v0)"
+  },
+  {
+   "t": 743.9571818229277,
+   "kind": "swing",
+   "team": 0,
+   "label": "SKY breaks the streak"
+  },
+  {
+   "t": 744.5571818229278,
+   "kind": "round",
+   "team": 0,
+   "label": "Round 7 to SKY — 3:4"
+  },
+  {
+   "t": 789.4449722076301,
+   "kind": "elim",
+   "team": 0,
+   "label": "SKY takes a duel (5v4)"
+  },
+  {
+   "t": 790.4237687642221,
+   "kind": "elim",
+   "team": 1,
+   "label": "TIDE takes a duel (4v4)"
+  },
+  {
+   "t": 804.3961824721192,
+   "kind": "elim",
+   "team": 1,
+   "label": "TIDE takes a duel (3v4)"
+  },
+  {
+   "t": 808.6259384176229,
+   "kind": "objective",
+   "team": 0,
+   "label": "Round 8: SKY plants"
+  },
+  {
+   "t": 826.6294122940396,
+   "kind": "elim",
+   "team": 1,
+   "label": "TIDE takes a duel (2v4)"
+  },
+  {
+   "t": 827.2448988045102,
+   "kind": "elim",
+   "team": 0,
+   "label": "SKY takes a duel (2v3)"
+  },
+  {
+   "t": 871.462417897163,
+   "kind": "round",
+   "team": 0,
+   "label": "Round 8 to SKY — 4:4"
+  },
+  {
+   "t": 914.9759525133763,
+   "kind": "elim",
+   "team": 1,
+   "label": "TIDE takes a duel (4v5)"
+  },
+  {
+   "t": 916.5270277461503,
+   "kind": "elim",
+   "team": 1,
+   "label": "TIDE takes a duel (3v5)"
+  },
+  {
+   "t": 918.430100660259,
+   "kind": "elim",
+   "team": 1,
+   "label": "TIDE takes a duel (2v5)"
+  },
+  {
+   "t": 923.8709210748319,
+   "kind": "objective",
+   "team": 0,
+   "label": "Round 9: SKY plants"
+  },
+  {
+   "t": 932.7822959501763,
+   "kind": "elim",
+   "team": 1,
+   "label": "TIDE takes a duel (1v5)"
+  },
+  {
+   "t": 987.2687711878215,
+   "kind": "swing",
+   "team": 1,
+   "label": "TIDE breaks the streak"
+  },
+  {
+   "t": 987.8687711878215,
+   "kind": "round",
+   "team": 1,
+   "label": "Round 9 to TIDE — 4:5"
+  },
+  {
+   "t": 1028.7525896873792,
+   "kind": "elim",
+   "team": 0,
+   "label": "SKY takes a duel (5v4)"
+  },
+  {
+   "t": 1030.1504561461975,
+   "kind": "elim",
+   "team": 0,
+   "label": "SKY takes a duel (5v3)"
+  },
+  {
+   "t": 1031.2277712710668,
+   "kind": "elim",
+   "team": 1,
+   "label": "TIDE takes a duel (4v3)"
+  },
+  {
+   "t": 1033.9907335006167,
+   "kind": "objective",
+   "team": 0,
+   "label": "Round 10: SKY plants"
+  },
+  {
+   "t": 1047.5448706223165,
+   "kind": "elim",
+   "team": 0,
+   "label": "SKY takes a duel (4v2)"
+  },
+  {
+   "t": 1060.1721163550858,
+   "kind": "elim",
+   "team": 0,
+   "label": "SKY takes a duel (4v1)"
+  },
+  {
+   "t": 1078.9414358618203,
+   "kind": "elim",
+   "team": 0,
+   "label": "SKY takes a duel (4v0)"
+  },
+  {
+   "t": 1097.797215199983,
+   "kind": "swing",
+   "team": 0,
+   "label": "SKY breaks the streak"
+  },
+  {
+   "t": 1098.3972151999828,
+   "kind": "round",
+   "team": 0,
+   "label": "Round 10 to SKY — 5:5"
+  },
+  {
+   "t": 1149.007975396095,
+   "kind": "elim",
+   "team": 1,
+   "label": "TIDE takes a duel (4v5)"
+  },
+  {
+   "t": 1167.5891251284165,
+   "kind": "elim",
+   "team": 1,
+   "label": "TIDE takes a duel (3v5)"
+  },
+  {
+   "t": 1173.4970929855017,
+   "kind": "objective",
+   "team": 0,
+   "label": "Round 11: SKY plants"
+  },
+  {
+   "t": 1186.9234712345062,
+   "kind": "elim",
+   "team": 1,
+   "label": "TIDE takes a duel (2v5)"
+  },
+  {
+   "t": 1187.3779883836864,
+   "kind": "elim",
+   "team": 0,
+   "label": "SKY takes a duel (2v4)"
+  },
+  {
+   "t": 1230.2251392146109,
+   "kind": "swing",
+   "team": 1,
+   "label": "TIDE breaks the streak"
+  },
+  {
+   "t": 1230.8251392146108,
+   "kind": "round",
+   "team": 1,
+   "label": "Round 11 to TIDE — 5:6"
+  },
+  {
+   "t": 1268.706285885768,
+   "kind": "elim",
+   "team": 0,
+   "label": "SKY takes a duel (5v4)"
+  },
+  {
+   "t": 1270.0016567323823,
+   "kind": "elim",
+   "team": 1,
+   "label": "TIDE takes a duel (4v4)"
+  },
+  {
+   "t": 1273.3287453538273,
+   "kind": "objective",
+   "team": 0,
+   "label": "Round 12: SKY plants"
+  },
+  {
+   "t": 1289.772830376262,
+   "kind": "elim",
+   "team": 1,
+   "label": "TIDE takes a duel (3v4)"
+  },
+  {
+   "t": 1301.0549434552436,
+   "kind": "elim",
+   "team": 1,
+   "label": "TIDE takes a duel (2v4)"
+  },
+  {
+   "t": 1315.5783876182977,
+   "kind": "elim",
+   "team": 0,
+   "label": "SKY takes a duel (2v3)"
+  },
+  {
+   "t": 1340.9035352795386,
+   "kind": "round",
+   "team": 0,
+   "label": "Round 12 to SKY — 6:6"
+  },
+  {
+   "t": 1380.1898287037388,
+   "kind": "elim",
+   "team": 0,
+   "label": "SKY takes a duel (5v4)"
+  },
+  {
+   "t": 1383.8635157240556,
+   "kind": "objective",
+   "team": 1,
+   "label": "Round 13: TIDE plants"
+  },
+  {
+   "t": 1402.073209644109,
+   "kind": "elim",
+   "team": 1,
+   "label": "TIDE takes a duel (4v4)"
+  },
+  {
+   "t": 1402.6110757797958,
+   "kind": "elim",
+   "team": 0,
+   "label": "SKY takes a duel (4v3)"
+  },
+  {
+   "t": 1413.775641805865,
+   "kind": "elim",
+   "team": 0,
+   "label": "SKY takes a duel (4v2)"
+  },
+  {
+   "t": 1414.3596338925884,
+   "kind": "elim",
+   "team": 0,
+   "label": "SKY takes a duel (4v1)"
+  },
+  {
+   "t": 1416.3114547615871,
+   "kind": "elim",
+   "team": 1,
+   "label": "TIDE takes a duel (3v1)"
+  },
+  {
+   "t": 1426.5197268273682,
+   "kind": "elim",
+   "team": 0,
+   "label": "SKY takes a duel (3v0)"
+  },
+  {
+   "t": 1438.74729748033,
+   "kind": "round",
+   "team": 0,
+   "label": "Round 13 to SKY — 7:6"
+  },
+  {
+   "t": 1479.2529219833204,
+   "kind": "elim",
+   "team": 1,
+   "label": "TIDE takes a duel (4v5)"
+  },
+  {
+   "t": 1498.9369911882097,
+   "kind": "elim",
+   "team": 0,
+   "label": "SKY takes a duel (4v4)"
+  },
+  {
+   "t": 1502.1230910238812,
+   "kind": "objective",
+   "team": 1,
+   "label": "Round 14: TIDE plants"
+  },
+  {
+   "t": 1551.01196327745,
+   "kind": "round",
+   "team": 0,
+   "label": "Round 14 to SKY — 8:6"
+  },
+  {
+   "t": 1592.7029350320345,
+   "kind": "elim",
+   "team": 0,
+   "label": "SKY takes a duel (5v4)"
+  },
+  {
+   "t": 1594.6505335292316,
+   "kind": "elim",
+   "team": 1,
+   "label": "TIDE takes a duel (4v4)"
+  },
+  {
+   "t": 1597.600793298567,
+   "kind": "objective",
+   "team": 1,
+   "label": "Round 15: TIDE plants"
+  },
+  {
+   "t": 1606.8742973611227,
+   "kind": "elim",
+   "team": 0,
+   "label": "SKY takes a duel (4v3)"
+  },
+  {
+   "t": 1608.6828775506935,
+   "kind": "elim",
+   "team": 0,
+   "label": "SKY takes a duel (4v2)"
+  },
+  {
+   "t": 1646.298981847102,
+   "kind": "round",
+   "team": 0,
+   "label": "Round 15 to SKY — 9:6"
+  },
+  {
+   "t": 1696.8684792331887,
+   "kind": "elim",
+   "team": 1,
+   "label": "TIDE takes a duel (4v5)"
+  },
+  {
+   "t": 1698.4939358271195,
+   "kind": "elim",
+   "team": 1,
+   "label": "TIDE takes a duel (3v5)"
+  },
+  {
+   "t": 1702.6466204151047,
+   "kind": "objective",
+   "team": 1,
+   "label": "Round 16: TIDE plants"
+  },
+  {
+   "t": 1716.711612472078,
+   "kind": "elim",
+   "team": 1,
+   "label": "TIDE takes a duel (2v5)"
+  },
+  {
+   "t": 1718.597752391687,
+   "kind": "elim",
+   "team": 0,
+   "label": "SKY takes a duel (2v4)"
+  },
+  {
+   "t": 1719.9196983249396,
+   "kind": "elim",
+   "team": 1,
+   "label": "TIDE takes a duel (1v4)"
+  },
+  {
+   "t": 1739.2876766545237,
+   "kind": "elim",
+   "team": 1,
+   "label": "TIDE takes a duel (0v4)"
+  },
+  {
+   "t": 1746.763501702203,
+   "kind": "swing",
+   "team": 1,
+   "label": "TIDE breaks the streak"
+  },
+  {
+   "t": 1747.363501702203,
+   "kind": "round",
+   "team": 1,
+   "label": "Round 16 to TIDE — 9:7"
+  },
+  {
+   "t": 1795.006514405506,
+   "kind": "elim",
+   "team": 0,
+   "label": "SKY takes a duel (5v4)"
+  },
+  {
+   "t": 1814.6452651529112,
+   "kind": "elim",
+   "team": 1,
+   "label": "TIDE takes a duel (4v4)"
+  },
+  {
+   "t": 1819.8174046345525,
+   "kind": "objective",
+   "team": 1,
+   "label": "Round 17: TIDE plants"
+  },
+  {
+   "t": 1838.7703248171606,
+   "kind": "round",
+   "team": 1,
+   "label": "Round 17 to TIDE — 9:8"
+  },
+  {
+   "t": 1886.4006873891228,
+   "kind": "elim",
+   "team": 0,
+   "label": "SKY takes a duel (5v4)"
+  },
+  {
+   "t": 1886.8494211405987,
+   "kind": "elim",
+   "team": 1,
+   "label": "TIDE takes a duel (4v4)"
+  },
+  {
+   "t": 1888.4931487214292,
+   "kind": "elim",
+   "team": 0,
+   "label": "SKY takes a duel (4v3)"
+  },
+  {
+   "t": 1894.3401779482613,
+   "kind": "objective",
+   "team": 1,
+   "label": "Round 18: TIDE plants"
+  },
+  {
+   "t": 1905.6445986135402,
+   "kind": "elim",
+   "team": 0,
+   "label": "SKY takes a duel (4v2)"
+  },
+  {
+   "t": 1906.9169723717966,
+   "kind": "elim",
+   "team": 0,
+   "label": "SKY takes a duel (4v1)"
+  },
+  {
+   "t": 1924.6551451573619,
+   "kind": "elim",
+   "team": 0,
+   "label": "SKY takes a duel (4v0)"
+  },
+  {
+   "t": 1941.8719022291252,
+   "kind": "swing",
+   "team": 0,
+   "label": "SKY breaks the streak"
+  },
+  {
+   "t": 1942.4719022291251,
+   "kind": "round",
+   "team": 0,
+   "label": "Round 18 to SKY — 10:8"
+  },
+  {
+   "t": 1984.7278309242338,
+   "kind": "elim",
+   "team": 0,
+   "label": "SKY takes a duel (5v4)"
+  },
+  {
+   "t": 1985.9644193129152,
+   "kind": "elim",
+   "team": 0,
+   "label": "SKY takes a duel (5v3)"
+  },
+  {
+   "t": 1988.8267957038715,
+   "kind": "objective",
+   "team": 1,
+   "label": "Round 19: TIDE plants"
+  },
+  {
+   "t": 2007.4214760761247,
+   "kind": "elim",
+   "team": 0,
+   "label": "SKY takes a duel (5v2)"
+  },
+  {
+   "t": 2025.3418922643648,
+   "kind": "elim",
+   "team": 0,
+   "label": "SKY takes a duel (5v1)"
+  },
+  {
+   "t": 2026.0641730576292,
+   "kind": "elim",
+   "team": 0,
+   "label": "SKY takes a duel (5v0)"
+  },
+  {
+   "t": 2060.7106957579967,
+   "kind": "round",
+   "team": 0,
+   "label": "Round 19 to SKY — 11:8"
+  },
+  {
+   "t": 2108.4712497680453,
+   "kind": "elim",
+   "team": 0,
+   "label": "SKY takes a duel (5v4)"
+  },
+  {
+   "t": 2110.1750343258495,
+   "kind": "elim",
+   "team": 1,
+   "label": "TIDE takes a duel (4v4)"
+  },
+  {
+   "t": 2124.661102745217,
+   "kind": "elim",
+   "team": 0,
+   "label": "SKY takes a duel (4v3)"
+  },
+  {
+   "t": 2125.0709573376,
+   "kind": "elim",
+   "team": 1,
+   "label": "TIDE takes a duel (3v3)"
+  },
+  {
+   "t": 2138.179043541197,
+   "kind": "elim",
+   "team": 0,
+   "label": "SKY takes a duel (3v2)"
+  },
+  {
+   "t": 2138.8811663926585,
+   "kind": "elim",
+   "team": 1,
+   "label": "TIDE takes a duel (2v2)"
+  },
+  {
+   "t": 2139.585115290527,
+   "kind": "elim",
+   "team": 1,
+   "label": "TIDE takes a duel (1v2)"
+  },
+  {
+   "t": 2143.731061390881,
+   "kind": "objective",
+   "team": 1,
+   "label": "Round 20: TIDE plants"
+  },
+  {
+   "t": 2154.8785408779054,
+   "kind": "elim",
+   "team": 1,
+   "label": "TIDE takes a duel (0v2)"
+  },
+  {
+   "t": 2179.7573468736377,
+   "kind": "round",
+   "team": 1,
+   "label": "Round 20 to TIDE — 11:9"
+  },
+  {
+   "t": 2227.600142599829,
+   "kind": "elim",
+   "team": 1,
+   "label": "TIDE takes a duel (4v5)"
+  },
+  {
+   "t": 2237.167586061545,
+   "kind": "elim",
+   "team": 1,
+   "label": "TIDE takes a duel (3v5)"
+  },
+  {
+   "t": 2238.0263935124503,
+   "kind": "elim",
+   "team": 1,
+   "label": "TIDE takes a duel (2v5)"
+  },
+  {
+   "t": 2241.498444428854,
+   "kind": "objective",
+   "team": 1,
+   "label": "Round 21: TIDE plants"
+  },
+  {
+   "t": 2259.1768708698455,
+   "kind": "elim",
+   "team": 1,
+   "label": "TIDE takes a duel (1v5)"
+  },
+  {
+   "t": 2260.7034992873673,
+   "kind": "elim",
+   "team": 1,
+   "label": "TIDE takes a duel (0v5)"
+  },
+  {
+   "t": 2291.9797570486558,
+   "kind": "round",
+   "team": 1,
+   "label": "Round 21 to TIDE — 11:10"
+  },
+  {
+   "t": 2335.6029100818564,
+   "kind": "elim",
+   "team": 1,
+   "label": "TIDE takes a duel (4v5)"
+  },
+  {
+   "t": 2346.996285362542,
+   "kind": "elim",
+   "team": 1,
+   "label": "TIDE takes a duel (3v5)"
+  },
+  {
+   "t": 2351.0658640641723,
+   "kind": "objective",
+   "team": 1,
+   "label": "Round 22: TIDE plants"
+  },
+  {
+   "t": 2360.858523917944,
+   "kind": "elim",
+   "team": 1,
+   "label": "TIDE takes a duel (2v5)"
+  },
+  {
+   "t": 2362.1218195009983,
+   "kind": "elim",
+   "team": 1,
+   "label": "TIDE takes a duel (1v5)"
+  },
+  {
+   "t": 2374.496452650987,
+   "kind": "elim",
+   "team": 1,
+   "label": "TIDE takes a duel (0v5)"
+  },
+  {
+   "t": 2385.1001600818713,
+   "kind": "round",
+   "team": 1,
+   "label": "Round 22 to TIDE — 11:11"
+  },
+  {
+   "t": 2429.362745138165,
+   "kind": "elim",
+   "team": 0,
+   "label": "SKY takes a duel (5v4)"
+  },
+  {
+   "t": 2431.2484054039237,
+   "kind": "elim",
+   "team": 1,
+   "label": "TIDE takes a duel (4v4)"
+  },
+  {
+   "t": 2442.605052384455,
+   "kind": "elim",
+   "team": 1,
+   "label": "TIDE takes a duel (3v4)"
+  },
+  {
+   "t": 2443.5290793691765,
+   "kind": "elim",
+   "team": 1,
+   "label": "TIDE takes a duel (2v4)"
+  },
+  {
+   "t": 2444.2500883691946,
+   "kind": "elim",
+   "team": 1,
+   "label": "TIDE takes a duel (1v4)"
+  },
+  {
+   "t": 2462.9008722611707,
+   "kind": "elim",
+   "team": 1,
+   "label": "TIDE takes a duel (0v4)"
+  },
+  {
+   "t": 2504.5725699749314,
+   "kind": "round",
+   "team": 1,
+   "label": "Round 23 to TIDE — 11:12"
+  },
+  {
+   "t": 2543.66489506024,
+   "kind": "elim",
+   "team": 1,
+   "label": "TIDE takes a duel (4v5)"
+  },
+  {
+   "t": 2544.8307016938465,
+   "kind": "elim",
+   "team": 0,
+   "label": "SKY takes a duel (4v4)"
+  },
+  {
+   "t": 2546.5030319768475,
+   "kind": "elim",
+   "team": 0,
+   "label": "SKY takes a duel (4v3)"
+  },
+  {
+   "t": 2552.191584808147,
+   "kind": "objective",
+   "team": 1,
+   "label": "Round 24: TIDE plants"
+  },
+  {
+   "t": 2563.137111472665,
+   "kind": "elim",
+   "team": 0,
+   "label": "SKY takes a duel (4v2)"
+  },
+  {
+   "t": 2563.8427869028883,
+   "kind": "elim",
+   "team": 0,
+   "label": "SKY takes a duel (4v1)"
+  },
+  {
+   "t": 2580.8289839988115,
+   "kind": "elim",
+   "team": 1,
+   "label": "TIDE takes a duel (3v1)"
+  },
+  {
+   "t": 2582.0852911116094,
+   "kind": "elim",
+   "team": 0,
+   "label": "SKY takes a duel (3v0)"
+  },
+  {
+   "t": 2605.1504880692814,
+   "kind": "round",
+   "team": 0,
+   "label": "Round 24 to SKY — 12:12"
+  },
+  {
+   "t": 2644.4658680068333,
+   "kind": "elim",
+   "team": 0,
+   "label": "SKY takes a duel (5v4)"
+  },
+  {
+   "t": 2644.933379578777,
+   "kind": "elim",
+   "team": 1,
+   "label": "TIDE takes a duel (4v4)"
+  },
+  {
+   "t": 2651.522140924633,
+   "kind": "elim",
+   "team": 1,
+   "label": "TIDE takes a duel (3v4)"
+  },
+  {
+   "t": 2652.4948909163477,
+   "kind": "elim",
+   "team": 0,
+   "label": "SKY takes a duel (3v3)"
+  },
+  {
+   "t": 2654.868775926717,
+   "kind": "objective",
+   "team": 1,
+   "label": "Round 25: TIDE plants"
+  },
+  {
+   "t": 2668.7014649102466,
+   "kind": "elim",
+   "team": 1,
+   "label": "TIDE takes a duel (2v3)"
+  },
+  {
+   "t": 2679.2566314224155,
+   "kind": "elim",
+   "team": 0,
+   "label": "SKY takes a duel (2v2)"
+  },
+  {
+   "t": 2708.2129914734983,
+   "kind": "round",
+   "team": 0,
+   "label": "Round 25 to SKY — 13:12"
+  }
+ ],
+ "synthetic": true,
+ "source": "Demo data (generated)"
+}
