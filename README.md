@@ -87,6 +87,8 @@ npm run typecheck  # TypeScript
 npm run build      # static build in dist/
 ```
 
+**Demo video footage** is recorded frame by frame with `node tools/record.mjs <url> <out>`: the game runs in film mode (`?film`), bots play with human-like timing, and the game's own audio engine renders the soundtrack offline, so the footage is smooth and in sync.
+
 The project is developed in **WebStorm**. Its run configurations, inspection profile and code style are committed in `.idea/`.
 
 ## License

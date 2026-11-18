@@ -7,6 +7,7 @@ import { Input } from './game/input';
 import { Renderer } from './game/render';
 import { readCard, renderCard } from './game/share';
 import { loadImportedMatches, loadSettings, StaffPanel } from './game/staff';
+import { filmApi } from './film';
 
 const PUBLIC_URL = 'https://abraham543.github.io/match-rhythm/';
 const app = document.querySelector<HTMLDivElement>('#app')!;
@@ -55,17 +56,20 @@ if (card) {
   wake();
   document.addEventListener('visibilitychange', () => document.visibilityState === 'visible' && wake());
 
-  // a booth must never freeze: one bad frame is logged and the next frame runs anyway
-  const loop = (ms: number) => {
+  const film = new URLSearchParams(location.search).has('film');
+  if (!film) {
+    // a booth must never freeze: one bad frame is logged and the next frame runs anyway
+    const loop = (ms: number) => {
+      requestAnimationFrame(loop);
+      try {
+        game.frame(ms / 1000);
+      } catch (e) {
+        console.error('frame failed', e);
+      }
+    };
     requestAnimationFrame(loop);
-    try {
-      game.frame(ms / 1000);
-    } catch (e) {
-      console.error('frame failed', e);
-    }
-  };
-  requestAnimationFrame(loop);
+  }
 
-  // for automated checks and the demo video
-  (window as unknown as { matchRhythm: unknown }).matchRhythm = { game, audio, board };
+  // for automated checks, and film mode for the demo video (frames driven by tools/record.mjs)
+  (window as unknown as { matchRhythm: unknown }).matchRhythm = { game, audio, board, film: film ? filmApi(game, audio) : null };
 }

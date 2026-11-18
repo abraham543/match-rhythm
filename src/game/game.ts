@@ -57,6 +57,8 @@ export class Game {
   private lead = 0; // smoothed tug-of-war position, -1..1
   private lastLeader = 0;
   private finishAt = 0;
+  /** Film mode (demo video): no live audio, the clock is driven frame by frame. */
+  film = false;
 
   constructor(
     private readonly r: Renderer,
@@ -390,7 +392,7 @@ export class Game {
     for (const c of this.chart.captions) if (c.time <= rt) cap = c;
     r.ticker(this.match, this.chart, rt, cap?.text ?? null, cap?.team ?? 0, cap ? rt - cap.time : 99, scoreAt(this.chart, rt));
     r.countdown(rt);
-    if (!this.audio.running) r.text('Sound is off — tap the screen or press a button for music', r.w / 2, r.h * 0.97, 16, COLORS.gold, 'center', 700);
+    if (!this.audio.running && !this.film) r.text('Sound is off — tap the screen or press a button for music', r.w / 2, r.h * 0.97, 16, COLORS.gold, 'center', 700);
     if (t > SONG.duration + 0.5) {
       this.audio.reset();
       const ranks = this.board.ranksFor(this.seats.map((s) => s.view.scorer.score));

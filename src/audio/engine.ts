@@ -4,6 +4,17 @@ import { chordAt, SONG } from '../core/chart';
 
 const midiHz = (m: number) => 440 * 2 ** ((m - 69) / 12);
 
+/** Sound events of one game, recorded in film mode and rendered offline for the demo video. */
+export type AudioEvent =
+  | { t: number; type: 'hit'; midi: number; quality: number; pan: number; chord: boolean }
+  | { t: number; type: 'miss'; pan: number }
+  | { t: number; type: 'stinger'; win: boolean }
+  | { t: number; type: 'duck' }
+  | { t: number; type: 'intensity'; level: number };
+
+/** An event as the engine reports it; the caller adds the song time. */
+export type AudioEventInput = AudioEvent extends infer E ? (E extends AudioEvent ? Omit<E, 't'> : never) : never;
+
 export class AudioEngine {
   ctx: AudioContext | null = null;
   private master!: GainNode;
@@ -18,11 +29,22 @@ export class AudioEngine {
   private playing = false;
   private started = false;
   volume = 0.8;
+  /** Film mode: no live audio; game sounds are recorded with their song time instead. */
+  disabled = false;
+  recorder: ((e: AudioEventInput) => void) | null = null;
 
   /** Must be called from a user gesture (key press / tap) the first time. */
   unlock(): void {
+    if (this.disabled) return;
     if (!this.ctx) {
-      this.ctx = new AudioContext({ latencyHint: 'interactive' });
+      this.initNodes(new AudioContext({ latencyHint: 'interactive' }));
+    }
+    if (this.ctx!.state === 'suspended') void this.ctx!.resume();
+  }
+
+  private initNodes(ctx: AudioContext): void {
+    {
+      this.ctx = ctx;
       this.master = this.ctx.createGain();
       this.master.gain.value = this.volume;
       const comp = this.ctx.createDynamicsCompressor();
@@ -43,7 +65,33 @@ export class AudioEngine {
       const d = this.noise.getChannelData(0);
       for (let i = 0; i < len; i++) d[i] = Math.random() * 2 - 1;
     }
-    if (this.ctx.state === 'suspended') void this.ctx.resume();
+  }
+
+  /** Renders a whole game offline: the soundtrack plus the recorded hits, `pre` seconds of silence first. */
+  async renderOffline(seconds: number, pre: number, events: AudioEvent[]): Promise<AudioBuffer> {
+    const ctx = new OfflineAudioContext(2, Math.ceil(seconds * 48000), 48000);
+    this.initNodes(ctx as unknown as AudioContext);
+    this.started = true;
+    const sixteenth = 60 / SONG.bpm / 4;
+    const levels = events.filter((e) => e.type === 'intensity') as Extract<AudioEvent, { type: 'intensity' }>[];
+    for (let step = 0; step * sixteenth < SONG.duration; step++) {
+      const songT = step * sixteenth;
+      let level = 0;
+      for (const l of levels) if (l.t <= songT) level = l.level;
+      this.intensity = level;
+      this.step(step, pre + songT, songT);
+    }
+    const rec = this.recorder;
+    this.recorder = null;
+    for (const e of events) {
+      const at = pre + Math.max(0, e.t);
+      if (e.type === 'hit') this.hit(e.midi, e.quality, e.pan, e.chord, at);
+      else if (e.type === 'miss') this.miss(e.pan, at);
+      else if (e.type === 'stinger') this.stinger(e.win, at);
+      else if (e.type === 'duck') this.duck(at);
+    }
+    this.recorder = rec;
+    return ctx.startRendering();
   }
 
   setVolume(v: number): void {
@@ -111,14 +159,17 @@ export class AudioEngine {
 
   /** 0..3, follows the combo multiplier: the band gets busier as the player gets better. */
   setIntensity(level: number): void {
-    this.intensity = Math.max(0, Math.min(3, level));
+    const v = Math.max(0, Math.min(3, level));
+    if (this.recorder && v !== this.intensity) this.recorder({ type: 'intensity', level: v });
+    this.intensity = v;
   }
 
   /** A miss muffles the music for a moment. */
-  duck(): void {
+  duck(at?: number): void {
+    this.recorder?.({ type: 'duck' });
     if (!this.ctx) return;
     const f = this.tone.frequency;
-    const now = this.ctx.currentTime;
+    const now = at ?? this.ctx.currentTime;
     f.cancelScheduledValues(now);
     f.setValueAtTime(550, now);
     f.exponentialRampToValueAtTime(18000, now + 0.7);
@@ -252,14 +303,18 @@ export class AudioEngine {
   }
 
   /** The note a player just hit: a bright pluck at the note's pitch. */
-  hit(midi: number, quality: number, pan = 0, chord = false): void {
-    if (chord) {
-      this.hit(midi - 12, quality, pan);
-      this.hit(midi + 7, quality * 0.6, pan);
-    }
+  hit(midi: number, quality: number, pan = 0, chord = false, when?: number): void {
+    this.recorder?.({ type: 'hit', midi, quality, pan, chord });
     if (!this.ctx) return;
+    if (chord) {
+      const rec = this.recorder;
+      this.recorder = null;
+      this.hit(midi - 12, quality, pan, false, when);
+      this.hit(midi + 7, quality * 0.6, pan, false, when);
+      this.recorder = rec;
+    }
     const ctx = this.ctx;
-    const at = ctx.currentTime;
+    const at = when ?? ctx.currentTime;
     const p = ctx.createStereoPanner();
     p.pan.value = pan;
     p.connect(this.sfx);
@@ -275,9 +330,10 @@ export class AudioEngine {
   }
 
   /** Final chord when the last note of the match is hit. */
-  stinger(win: boolean): void {
+  stinger(win: boolean, when?: number): void {
+    this.recorder?.({ type: 'stinger', win });
     if (!this.ctx) return;
-    const at = this.ctx.currentTime;
+    const at = when ?? this.ctx.currentTime;
     const notes = win ? [57, 64, 69, 72, 76] : [57, 60, 64];
     for (const m of notes) {
       const o = this.ctx.createOscillator();
@@ -294,12 +350,13 @@ export class AudioEngine {
     }
   }
 
-  miss(pan = 0): void {
+  miss(pan = 0, when?: number): void {
+    this.recorder?.({ type: 'miss', pan });
     if (!this.ctx) return;
     const p = this.ctx.createStereoPanner();
     p.pan.value = pan;
     p.connect(this.sfx);
-    this.noiseHit(this.ctx.currentTime, 300, 1.2, 0.09, 0.2, 'lowpass', p);
+    this.noiseHit(when ?? this.ctx.currentTime, 300, 1.2, 0.09, 0.2, 'lowpass', p);
   }
 
   /** Short UI blip for menus. */
