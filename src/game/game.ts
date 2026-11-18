@@ -356,7 +356,7 @@ export class Game {
       } else {
         r.text('Not on today\'s board — try again!', cx, r.h * 0.68, 20, COLORS.dim, 'center', 600);
       }
-      // score card QR: big on the right for one player, in the corner of each card for two
+      // scorecard QR: big on the right for one player, in the corner of each card for two
       const url = shareUrl(this.settings.shareBase, {
         n: seat.saved ? seat.initials.join('') : '',
         s: s.score, g: s.grade(), a: Math.round(s.accuracy() * 100), c: s.maxCombo, m: this.match.title, d: new Date().toISOString().slice(0, 10),
@@ -367,7 +367,7 @@ export class Game {
       } else {
         const size = r.h * 0.36;
         const qx = r.w * 0.62;
-        r.text('Scan for your score card', qx + size / 2, r.h * 0.27, 20, COLORS.dim, 'center', 700);
+        r.text('Scan for your scorecard', qx + size / 2, r.h * 0.27, 20, COLORS.dim, 'center', 700);
         r.qr(this.qrFor(url), qx, r.h * 0.31, size);
       }
     });

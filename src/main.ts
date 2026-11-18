@@ -12,7 +12,7 @@ const app = document.querySelector<HTMLDivElement>('#app')!;
 const card = readCard(location.hash);
 
 if (card) {
-  // opened from a QR code on a phone: show the score card, not the booth game
+  // opened from a QR code on a phone: show the scorecard, not the booth game
   document.body.classList.add('card-mode');
   renderCard(app, card);
 } else {

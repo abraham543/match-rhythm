@@ -15,7 +15,7 @@ export function loadSettings<T extends object>(defaults: T): T {
 }
 
 export class StaffPanel {
-  private el: HTMLDivElement;
+  private readonly el: HTMLDivElement;
   open = false;
 
   constructor(private game: Game, private board: Leaderboard, canvas: HTMLElement) {

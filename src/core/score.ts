@@ -1,4 +1,4 @@
-// Timing judgement and scoring for one player.
+// Timing judgment and scoring for one player.
 import type { Chart, Judgement, Note } from './types';
 
 export const WINDOWS = { perfect: 0.05, great: 0.1, good: 0.15 };
@@ -26,8 +26,8 @@ export class Scorer {
   score = 0;
   combo = 0;
   maxCombo = 0;
-  counts: Record<Judgement, number> = { perfect: 0, great: 0, good: 0, miss: 0 };
-  private done: boolean[];
+  readonly counts: Record<Judgement, number> = { perfect: 0, great: 0, good: 0, miss: 0 };
+  private readonly done: boolean[];
   private cursor = 0;
 
   constructor(readonly chart: Chart) {
@@ -88,7 +88,7 @@ export class Scorer {
     this.score += POINTS[j] * multiplier(this.combo - 1);
   }
 
-  /** 0..1, weighted by judgement. */
+  /** 0..1, weighted by judgment. */
   accuracy(): number {
     const total = this.counts.perfect + this.counts.great + this.counts.good + this.counts.miss;
     if (total === 0) return 0;

@@ -1,4 +1,4 @@
-// Score card shared by QR code. The data travels in the URL (#card=...), so no server is needed:
+// Scorecard shared by QR code. The data travels in the URL (#card=...), so no server is needed:
 // the phone opens the hosted game page, which shows the card instead of the booth game.
 export interface CardData {
   n: string; // initials
@@ -11,12 +11,15 @@ export interface CardData {
 }
 
 function b64url(s: string): string {
-  return btoa(unescape(encodeURIComponent(s))).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+  const bytes = new TextEncoder().encode(s);
+  let bin = '';
+  for (const b of bytes) bin += String.fromCharCode(b);
+  return btoa(bin).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
 }
 
 function unb64url(s: string): string {
   const pad = s.replace(/-/g, '+').replace(/_/g, '/') + '==='.slice((s.length + 3) % 4);
-  return decodeURIComponent(escape(atob(pad)));
+  return new TextDecoder().decode(Uint8Array.from(atob(pad), (c) => c.charCodeAt(0)));
 }
 
 export function shareUrl(base: string, card: CardData): string {
@@ -44,7 +47,7 @@ export function renderCard(root: HTMLElement, c: CardData): void {
   document.title = `Match Rhythm — ${c.s.toLocaleString('en-US')} points`;
   root.innerHTML = `
     <main class="card">
-      <p class="kicker">MATCH RHYTHM · SCORE CARD</p>
+      <p class="kicker">MATCH RHYTHM · SCORECARD</p>
       <h1>${esc(c.g)}</h1>
       <p class="score">${c.s.toLocaleString('en-US')}</p>
       <p class="who">${c.n ? esc(c.n) + ' · ' : ''}${esc(c.d)}</p>

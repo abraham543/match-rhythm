@@ -181,7 +181,7 @@ export class Renderer {
       const y = hit - dt * speed;
       this.note(n, x0 + laneW * (n.lane + 0.5), y, laneW, match);
     });
-    // judgement popups
+    // judgment popups
     for (const e of view.effects) {
       const age = t - e.at;
       if (age < 0 || age > 0.6) continue;

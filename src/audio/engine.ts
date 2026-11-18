@@ -46,7 +46,7 @@ export class AudioEngine {
     if (this.ctx) this.master.gain.setTargetAtTime(v, this.ctx.currentTime, 0.05);
   }
 
-  /** Output latency the player hears, used to line up judgement with sound. */
+  /** Output latency the player hears, used to line up judgment with sound. */
   get latency(): number {
     if (!this.ctx) return 0;
     return (this.ctx.outputLatency || 0) + (this.ctx.baseLatency || 0);
