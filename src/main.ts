@@ -6,8 +6,9 @@ import { Game, type Settings } from './game/game';
 import { Input } from './game/input';
 import { Renderer } from './game/render';
 import { readCard, renderCard } from './game/share';
-import { loadSettings, StaffPanel } from './game/staff';
+import { loadImportedMatches, loadSettings, StaffPanel } from './game/staff';
 
+const PUBLIC_URL = 'https://abraham543.github.io/match-rhythm/';
 const app = document.querySelector<HTMLDivElement>('#app')!;
 const card = readCard(location.hash);
 
@@ -20,12 +21,15 @@ if (card) {
   canvas.className = 'stage';
   app.appendChild(canvas);
 
+  // a booth PC running a local copy still needs QR codes that phones can open
+  const local = /^(localhost|127\.0\.0\.1|\[::1\])$/.test(location.hostname) || location.protocol === 'file:';
   const settings = loadSettings<Settings>({
     difficulty: 'standard',
     match: 'rotate',
     volume: 0.8,
-    offsetMs: 0,
-    shareBase: location.origin + location.pathname,
+    visualOffsetMs: 0,
+    inputOffsetMs: 0,
+    shareBase: local ? PUBLIC_URL : location.origin + location.pathname,
     allowTwoPlayers: true,
   });
 
@@ -33,13 +37,23 @@ if (card) {
   const input = new Input(canvas);
   const audio = new AudioEngine();
   const board = new Leaderboard(localStorage);
-  const game = new Game(renderer, input, audio, board, settings, SAMPLE_MATCHES);
-  const staff = new StaffPanel(game, board, canvas);
+  const imported = loadImportedMatches();
+  const matches = [...imported, ...SAMPLE_MATCHES.filter((m) => !imported.some((x) => x.id === m.id))];
+  const game = new Game(renderer, input, audio, board, settings, matches);
+  const staff = new StaffPanel(game, board, input, canvas);
   input.on((a) => a.type === 'staff' && staff.toggle());
 
   const resize = () => renderer.resize();
   window.addEventListener('resize', resize);
   resize();
+
+  // kiosk: keep the screen awake while the game is visible
+  const wake = () => {
+    const nav = navigator as Navigator & { wakeLock?: { request(type: 'screen'): Promise<unknown> } };
+    nav.wakeLock?.request('screen').catch(() => undefined);
+  };
+  wake();
+  document.addEventListener('visibilitychange', () => document.visibilityState === 'visible' && wake());
 
   // a booth must never freeze: one bad frame is logged and the next frame runs anyway
   const loop = (ms: number) => {

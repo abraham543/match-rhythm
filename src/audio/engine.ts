@@ -8,6 +8,8 @@ export class AudioEngine {
   ctx: AudioContext | null = null;
   private master!: GainNode;
   private music!: GainNode;
+  private tone!: BiquadFilterNode;
+  private intensity = 0;
   private sfx!: GainNode;
   private noise!: AudioBuffer;
   private startAt = 0;
@@ -29,7 +31,10 @@ export class AudioEngine {
       this.master.connect(comp).connect(this.ctx.destination);
       this.music = this.ctx.createGain();
       this.music.gain.value = 0.55;
-      this.music.connect(this.master);
+      this.tone = this.ctx.createBiquadFilter();
+      this.tone.type = 'lowpass';
+      this.tone.frequency.value = 18000;
+      this.music.connect(this.tone).connect(this.master);
       this.sfx = this.ctx.createGain();
       this.sfx.gain.value = 0.9;
       this.sfx.connect(this.master);
@@ -50,6 +55,11 @@ export class AudioEngine {
   get latency(): number {
     if (!this.ctx) return 0;
     return (this.ctx.outputLatency || 0) + (this.ctx.baseLatency || 0);
+  }
+
+  /** True when sound actually plays (a booth driven only by a gamepad may never unlock audio). */
+  get running(): boolean {
+    return !!this.ctx && this.ctx.state === 'running' && this.started;
   }
 
   /** Song clock in seconds (negative before the start). */
@@ -99,6 +109,21 @@ export class AudioEngine {
     }
   }
 
+  /** 0..3, follows the combo multiplier: the band gets busier as the player gets better. */
+  setIntensity(level: number): void {
+    this.intensity = Math.max(0, Math.min(3, level));
+  }
+
+  /** A miss muffles the music for a moment. */
+  duck(): void {
+    if (!this.ctx) return;
+    const f = this.tone.frequency;
+    const now = this.ctx.currentTime;
+    f.cancelScheduledValues(now);
+    f.setValueAtTime(550, now);
+    f.exponentialRampToValueAtTime(18000, now + 0.7);
+  }
+
   private step(step: number, at: number, songT: number): void {
     const inBar = step % 16;
     const fadeOut = songT > SONG.duration - SONG.outro;
@@ -112,6 +137,8 @@ export class AudioEngine {
     if (intro) return;
     if (inBar === 4 || inBar === 12) this.snare(at);
     if (inBar % 2 === 1) this.hat(at, inBar % 4 === 3 ? 0.18 : 0.1);
+    else if (this.intensity >= 2 && !fadeOut) this.hat(at, 0.05);
+    if (this.intensity >= 3 && !fadeOut && inBar % 2 === 0) this.arp(at, chord[(inBar / 2) % chord.length] + 24);
     // bass: root on the off-beats, octave jump at the end of the bar
     if ([2, 6, 10, 14].includes(inBar)) this.bass(at, chord[0] - 24 + (inBar === 14 ? 12 : 0));
     if (inBar === 0) this.pad(at, chord, (60 / SONG.bpm) * 4);
@@ -175,6 +202,16 @@ export class AudioEngine {
     o.stop(at + 0.08);
   }
 
+  private arp(at: number, midi: number): void {
+    const o = this.ctx!.createOscillator();
+    o.type = 'triangle';
+    o.frequency.value = midiHz(midi);
+    const g = this.env(at, 0.003, 0.12, 0.05);
+    o.connect(g).connect(this.music);
+    o.start(at);
+    o.stop(at + 0.18);
+  }
+
   private bass(at: number, midi: number): void {
     const ctx = this.ctx!;
     const o = ctx.createOscillator();
@@ -215,7 +252,11 @@ export class AudioEngine {
   }
 
   /** The note a player just hit: a bright pluck at the note's pitch. */
-  hit(midi: number, quality: number, pan = 0): void {
+  hit(midi: number, quality: number, pan = 0, chord = false): void {
+    if (chord) {
+      this.hit(midi - 12, quality, pan);
+      this.hit(midi + 7, quality * 0.6, pan);
+    }
     if (!this.ctx) return;
     const ctx = this.ctx;
     const at = ctx.currentTime;
@@ -230,6 +271,26 @@ export class AudioEngine {
       o.connect(g).connect(p);
       o.start(at);
       o.stop(at + 0.5);
+    }
+  }
+
+  /** Final chord when the last note of the match is hit. */
+  stinger(win: boolean): void {
+    if (!this.ctx) return;
+    const at = this.ctx.currentTime;
+    const notes = win ? [57, 64, 69, 72, 76] : [57, 60, 64];
+    for (const m of notes) {
+      const o = this.ctx.createOscillator();
+      o.type = 'sawtooth';
+      o.frequency.value = midiHz(m);
+      const f = this.ctx.createBiquadFilter();
+      f.type = 'lowpass';
+      f.frequency.setValueAtTime(400, at);
+      f.frequency.exponentialRampToValueAtTime(3000, at + 0.4);
+      const g = this.env(at, 0.02, 1.6, 0.07);
+      o.connect(f).connect(g).connect(this.sfx);
+      o.start(at);
+      o.stop(at + 1.8);
     }
   }
 

@@ -21,13 +21,21 @@ export function dayKey(d = new Date()): string {
   return `${PREFIX}${d.getFullYear()}-${p(d.getMonth() + 1)}-${p(d.getDate())}`;
 }
 
+// three-letter words a public booth screen should not show
+const BLOCKED = new Set(['ASS', 'FUK', 'FUC', 'FCK', 'SEX', 'CUM', 'DIK', 'DIC', 'KKK', 'NIG', 'FAG', 'TIT', 'XXX', 'WTF', 'GAY', 'NAZ', 'SS1']);
+
 export function cleanInitials(s: string): string {
-  const v = s.toUpperCase().replace(/[^A-Z0-9]/g, '').slice(0, 3);
-  return v.padEnd(3, '-');
+  const v = s.toUpperCase().replace(/[^A-Z0-9]/g, '').slice(0, 3).padEnd(3, '-');
+  return BLOCKED.has(v) ? 'C9!' : v;
 }
 
 export class Leaderboard {
-  constructor(private store: Store, private key = dayKey()) {}
+  /** `fixedKey` is for tests; normally the key follows the calendar, so a kiosk left running rolls over at midnight. */
+  constructor(private readonly store: Store, private readonly fixedKey?: string) {}
+
+  private get key(): string {
+    return this.fixedKey ?? dayKey();
+  }
 
   list(): Entry[] {
     try {
@@ -44,6 +52,17 @@ export class Leaderboard {
     const pos = l.findIndex((e) => score > e.score);
     if (pos >= 0) return pos + 1;
     return l.length < SIZE && score > 0 ? l.length + 1 : 0;
+  }
+
+  /** Ranks for several scores at once (two players): they compete with each other for the last places. */
+  ranksFor(scores: number[]): number[] {
+    const board = this.list().map((e) => ({ score: e.score, who: -1 }));
+    const all = [...board, ...scores.map((score, who) => ({ score, who }))].filter((x) => x.score > 0);
+    all.sort((a, b) => b.score - a.score || a.who - b.who);
+    return scores.map((_, who) => {
+      const pos = all.findIndex((x) => x.who === who);
+      return pos >= 0 && pos < SIZE ? pos + 1 : 0;
+    });
   }
 
   add(e: Entry): number {

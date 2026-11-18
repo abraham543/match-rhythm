@@ -18,7 +18,7 @@ body,
   width: 100vw;
   height: 100vh;
   touch-action: none;
-  cursor: default;
+  cursor: none;
 }
 
 .staff {
@@ -143,4 +143,13 @@ body.card-mode #app {
 .card .cta {
   margin: 20px 0 16px;
   font-weight: 600;
+}
+
+.card .strong {
+  color: #4fb3ff;
+  font-weight: 700;
+}
+
+body.staff-open .stage {
+  cursor: default;
 }

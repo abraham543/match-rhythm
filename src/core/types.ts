@@ -45,12 +45,18 @@ export interface Note {
   pitch: number;
   /** The moment of the real match this note stands for (seconds). */
   matchT: number;
+  /** A momentum swing that shares its slot with a round result. */
+  accent?: boolean;
+  /** The last note of the song: the decisive moment of the match. */
+  final?: boolean;
 }
 
 export interface Caption {
   time: number;
   text: string;
   team: 0 | 1;
+  /** Rounds won by each team after this moment, when the game counts rounds. */
+  score?: [number, number];
 }
 
 export interface Chart {
@@ -62,6 +68,8 @@ export interface Chart {
   captions: Caption[];
   /** The slice of the real match that the song covers, in match seconds. */
   window: [number, number];
+  /** Team that wins the match at the end of the song. */
+  winner: 0 | 1;
 }
 
 export type Judgement = 'perfect' | 'great' | 'good' | 'miss';

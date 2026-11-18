@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { buildChart, laneFor, NOTE_TARGET, pickWindow, SONG } from './chart';
+import { buildChart, laneFor, NOTE_TARGET, pickWindow, RAMP, scoreAt, SONG } from './chart';
 import { judge, multiplier, Scorer, WINDOWS } from './score';
 import { cleanInitials, Leaderboard, SIZE } from './leaderboard';
 import { SAMPLE_MATCHES, tacticalMatch } from '../data/samples';
@@ -79,7 +79,7 @@ describe('chart', () => {
 
 describe('scoring', () => {
   const chart: Chart = {
-    matchId: 't', bpm: 120, duration: 10, window: [0, 1], captions: [],
+    matchId: 't', bpm: 120, duration: 10, window: [0, 1], captions: [], winner: 0,
     notes: [1, 2, 3].map((time, i) => ({ time, lane: i % 2, kind: 'elim' as const, team: 0 as const, label: '', pitch: 60, matchT: time })),
   };
   it('judges by timing windows', () => {
@@ -132,5 +132,92 @@ describe('import', () => {
     expect(m.teams[1].tag).toBe('B');
     const c = buildChart(m, 'casual');
     expect(c.notes.length).toBeGreaterThan(20);
+  });
+});
+
+describe('song structure (review fixes)', () => {
+  const all = SAMPLE_MATCHES.flatMap((m) => (['casual', 'standard', 'pro'] as const).map((d) => ({ m, d, c: buildChart(m, d) })));
+  it('no note before the count-in ends', () => {
+    for (const { c } of all) expect(c.notes[0].time).toBeGreaterThanOrEqual(SONG.leadIn - 1e-9);
+  });
+  it('the song ends on the decisive moment of the match', () => {
+    for (const { m, c } of all) {
+      const lastRound = [...m.events].reverse().find((e) => e.kind === 'round')!;
+      const last = c.notes[c.notes.length - 1];
+      expect(last.final).toBe(true);
+      expect(last.matchT).toBe(lastRound.t);
+      expect(c.winner).toBe(lastRound.team);
+    }
+  });
+  it('momentum swings survive next to round results', () => {
+    const c = buildChart(SAMPLE_MATCHES[0], 'standard');
+    expect(c.notes.some((n) => n.kind === 'swing' || n.accent)).toBe(true);
+  });
+  it('the opening is gentle: one note at a time, a beat apart', () => {
+    const beat = 60 / SONG.bpm;
+    for (const { c } of all) {
+      const early = c.notes.filter((n) => n.time < SONG.leadIn + RAMP);
+      for (let i = 1; i < early.length; i++) expect(early[i].time - early[i - 1].time).toBeGreaterThanOrEqual(beat - 0.02);
+    }
+  });
+  it('casual never asks for two notes at once', () => {
+    for (const { d, c } of all) {
+      if (d !== 'casual') continue;
+      const times = c.notes.map((n) => n.time.toFixed(4));
+      expect(new Set(times).size).toBe(times.length);
+    }
+  });
+  it('the melody moves (voice leading, not one pitch per lane)', () => {
+    for (const { c } of all) expect(new Set(c.notes.map((n) => n.pitch)).size).toBeGreaterThanOrEqual(6);
+  });
+  it('the ticker can show the running round score', () => {
+    const c = buildChart(SAMPLE_MATCHES[0], 'standard');
+    const s = scoreAt(c, SONG.duration);
+    expect(s).not.toBeNull();
+    expect(Math.max(...s!)).toBe(13);
+  });
+});
+
+describe('fair scoring (review fixes)', () => {
+  it('mashing all lanes at 10 Hz scores far below a clean run', () => {
+    const c = buildChart(SAMPLE_MATCHES[0], 'standard');
+    const clean = new Scorer(c);
+    for (const n of c.notes) clean.press(n.lane, n.time);
+    const masher = new Scorer(c);
+    for (let t = 0; t < SONG.duration; t += 0.1) {
+      for (let l = 0; l < 4; l++) masher.press(l, t);
+      masher.sweep(t);
+    }
+    masher.sweep(SONG.duration + 1);
+    expect(masher.score).toBeLessThan(clean.score * 0.25);
+  });
+  it('a clean run hits the final note and earns the bonus', () => {
+    const c = buildChart(SAMPLE_MATCHES[1], 'casual');
+    const s = new Scorer(c, false);
+    for (const n of c.notes) s.press(n.lane, n.time);
+    expect(s.finalJudgement).toBe('perfect');
+    expect(s.counts.miss).toBe(0);
+  });
+});
+
+describe('leaderboard (review fixes)', () => {
+  it('two players compete for the last places', () => {
+    const b = new Leaderboard(memory(), 'k');
+    for (let i = 0; i < 9; i++) b.add({ initials: 'x', score: 1000 + i, grade: 'A', match: 'm', at: i });
+    expect(b.ranksFor([5000, 4000])).toEqual([1, 2]);
+    expect(b.ranksFor([10, 20])).toEqual([0, 10]);
+  });
+  it('the day key follows the calendar', () => {
+    const store = memory();
+    const b = new Leaderboard(store);
+    b.add({ initials: 'abc', score: 5, grade: 'A', match: 'm', at: 1 });
+    expect(b.list().length).toBe(1);
+    const keys: string[] = [];
+    const s2 = { ...store, setItem: (k: string, v: string) => { keys.push(k); store.setItem(k, v); } };
+    new Leaderboard(s2).add({ initials: 'abc', score: 5, grade: 'A', match: 'm', at: 2 });
+    expect(keys[0]).toMatch(/^match-rhythm:board:\d{4}-\d{2}-\d{2}$/);
+  });
+  it('blocks rude initials', () => {
+    expect(cleanInitials('ass')).toBe('C9!');
   });
 });

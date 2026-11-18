@@ -1,8 +1,10 @@
 // Timing judgment and scoring for one player.
-import type { Chart, Judgement, Note } from './types';
+import type { Chart, EventKind, Judgement, Note } from './types';
 
 export const WINDOWS = { perfect: 0.05, great: 0.1, good: 0.15 };
 const POINTS: Record<Judgement, number> = { perfect: 300, great: 200, good: 100, miss: 0 };
+/** A stray press this close before a note caps that note at "good": mashing does not pay. */
+const MASH_WINDOW = 0.25;
 
 export function judge(delta: number): Judgement {
   const d = Math.abs(delta);
@@ -19,19 +21,36 @@ export function multiplier(combo: number): number {
 export interface HitResult {
   note: Note;
   judgement: Judgement;
+  /** Seconds; negative = early. */
   delta: number;
 }
+
+/** Hits per kind of match event, for the "in match terms" results line. */
+export type KindStats = Record<EventKind, { hit: number; total: number }>;
 
 export class Scorer {
   score = 0;
   combo = 0;
   maxCombo = 0;
+  /** Presses that hit no note. */
+  stray = 0;
   readonly counts: Record<Judgement, number> = { perfect: 0, great: 0, good: 0, miss: 0 };
+  readonly byKind: KindStats = { elim: { hit: 0, total: 0 }, objective: { hit: 0, total: 0 }, round: { hit: 0, total: 0 }, swing: { hit: 0, total: 0 } };
+  /** Team-split eliminations: hits on each team's elimination lane. */
+  readonly elimByTeam: { hit: number; total: number }[] = [{ hit: 0, total: 0 }, { hit: 0, total: 0 }];
+  /** Judgment of the final, decisive note (null until it is judged). */
+  finalJudgement: Judgement | null = null;
   private readonly done: boolean[];
+  private readonly lastStray: number[] = [-Infinity, -Infinity, -Infinity, -Infinity];
   private cursor = 0;
 
-  constructor(readonly chart: Chart) {
+  /** `strict`: a stray press breaks the combo (standard and pro). */
+  constructor(readonly chart: Chart, private readonly strict = true) {
     this.done = chart.notes.map(() => false);
+    for (const n of chart.notes) {
+      this.byKind[n.kind].total++;
+      if (n.kind === 'elim') this.elimByTeam[n.team].total++;
+    }
   }
 
   /** A press on `lane` at song time `t`. Returns the judged note, or null for a press that hit nothing. */
@@ -48,11 +67,18 @@ export class Scorer {
         bestDelta = d;
       }
     }
-    if (bestIdx < 0) return null;
+    if (bestIdx < 0) {
+      this.stray++;
+      if (lane >= 0 && lane < this.lastStray.length) this.lastStray[lane] = t;
+      if (this.strict) this.combo = 0;
+      return null;
+    }
+    const note = this.chart.notes[bestIdx];
     this.done[bestIdx] = true;
-    const j = judge(bestDelta);
-    this.apply(j);
-    return { note: this.chart.notes[bestIdx], judgement: j, delta: bestDelta };
+    let j = judge(bestDelta);
+    if (j !== 'good' && note.time - this.lastStray[lane] < MASH_WINDOW) j = 'good';
+    this.apply(j, note);
+    return { note, judgement: j, delta: bestDelta };
   }
 
   /** Marks every note that can no longer be hit at time `t` as missed. */
@@ -66,7 +92,7 @@ export class Scorer {
       }
       if (t - n.time <= WINDOWS.good) break;
       this.done[this.cursor] = true;
-      this.apply('miss');
+      this.apply('miss', n);
       missed.push(n);
       this.cursor++;
     }
@@ -77,15 +103,18 @@ export class Scorer {
     return this.done[i];
   }
 
-  private apply(j: Judgement): void {
+  private apply(j: Judgement, note: Note): void {
     this.counts[j]++;
+    if (note.final) this.finalJudgement = j;
     if (j === 'miss') {
       this.combo = 0;
       return;
     }
+    this.byKind[note.kind].hit++;
+    if (note.kind === 'elim') this.elimByTeam[note.team].hit++;
     this.combo++;
     this.maxCombo = Math.max(this.maxCombo, this.combo);
-    this.score += POINTS[j] * multiplier(this.combo - 1);
+    this.score += POINTS[j] * multiplier(this.combo - 1) * (note.final ? 3 : 1);
   }
 
   /** 0..1, weighted by judgment. */
